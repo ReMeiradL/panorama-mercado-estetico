@@ -1,0 +1,21 @@
+# Nunca suba estes arquivos!
+.env
+*.env
+ 
+# Ambientes virtuais
+venv/
+.venv/
+env/
+ 
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+ 
+# Dados locais
+*.csv
+*.parquet
+*.pdf
+dados_brutos/*
+!dados_brutos/**/.gitkeep

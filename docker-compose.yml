@@ -1,0 +1,49 @@
+services:
+
+  # =============================================================
+  # MINIO - Data Lake (S3 local)
+  # =============================================================
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # =============================================================
+  # POSTGRES - DATA PROJECT 
+  # =============================================================
+  postgres-data:
+    image: postgres:16
+    container_name: postgres-data
+    environment:
+      POSTGRES_USER: ${PG_DATA_USER}
+      POSTGRES_PASSWORD: ${PG_DATA_PASSWORD}
+      POSTGRES_DB: ${PG_DATA_DB}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "turma03", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+
+volumes:
+  minio_data:
+  postgres_data:
