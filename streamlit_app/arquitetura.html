@@ -1,0 +1,449 @@
+<title>Do PDF ao Dashboard</title>
+<style>
+  :root {
+    --paper: #eef0f2;
+    --surface: #ffffff;
+    --surface-2: #f4f6f7;
+    --ink: #1c2126;
+    --ink-soft: #55606b;
+    --ink-faint: #8993a0;
+    --line: #c7cdd3;
+    --line-soft: #dde1e4;
+
+    --raw: #5b6470;
+    --bronze: #a85d2e;
+    --silver: #6e7f94;
+    --gold: #a8791f;
+    --consumo: #3d5c72;
+
+    --raw-bg: #5b647014;
+    --bronze-bg: #a85d2e14;
+    --silver-bg: #6e7f9414;
+    --gold-bg: #a8791f16;
+    --consumo-bg: #3d5c7214;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14171a;
+      --surface: #1b1f24;
+      --surface-2: #20252b;
+      --ink: #e7e9ec;
+      --ink-soft: #9aa3ac;
+      --ink-faint: #6b7480;
+      --line: #33393f;
+      --line-soft: #282e34;
+
+      --raw: #99a2ad;
+      --bronze: #d68a4c;
+      --silver: #9bb0c4;
+      --gold: #e0ac4a;
+      --consumo: #7fa3ba;
+
+      --raw-bg: #99a2ad1f;
+      --bronze-bg: #d68a4c1f;
+      --silver-bg: #9bb0c41f;
+      --gold-bg: #e0ac4a1f;
+      --consumo-bg: #7fa3ba1f;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #14171a;
+    --surface: #1b1f24;
+    --surface-2: #20252b;
+    --ink: #e7e9ec;
+    --ink-soft: #9aa3ac;
+    --ink-faint: #6b7480;
+    --line: #33393f;
+    --line-soft: #282e34;
+
+    --raw: #99a2ad;
+    --bronze: #d68a4c;
+    --silver: #9bb0c4;
+    --gold: #e0ac4a;
+    --consumo: #7fa3ba;
+
+    --raw-bg: #99a2ad1f;
+    --bronze-bg: #d68a4c1f;
+    --silver-bg: #9bb0c41f;
+    --gold-bg: #e0ac4a1f;
+    --consumo-bg: #7fa3ba1f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 4rem 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: 640px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  h1 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 650;
+    font-size: 2.6rem;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .thesis {
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  .thesis b { color: var(--ink); font-weight: 600; }
+
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.88em;
+    background: var(--surface-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    padding: 0.08em 0.4em;
+  }
+
+  section h2 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    letter-spacing: 0.09em;
+    margin: 0 0 1.1rem 0;
+  }
+
+  /* ---- diagram ---- */
+  .diagram-wrap {
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 1.4rem 1.2rem 1rem;
+  }
+
+  .diagram-scroll {
+    overflow-x: auto;
+  }
+
+  .diagram-scroll svg {
+    display: block;
+    width: 100%;
+    min-width: 980px;
+    height: auto;
+  }
+
+  svg text { font-family: "IBM Plex Sans", sans-serif; fill: var(--ink); }
+  svg .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; fill: var(--ink-faint); }
+  svg .col-label { font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0.06em; }
+  svg .verb { font-family: "IBM Plex Mono", ui-monospace, monospace; fill: var(--ink-faint); }
+  svg .edge { stroke: var(--ink-faint); stroke-width: 1.4; fill: none; }
+
+  svg .node { stroke-width: 1.4; rx: 6; }
+  svg .node-raw    { fill: var(--raw-bg);    stroke: var(--raw); }
+  svg .node-bronze { fill: var(--bronze-bg); stroke: var(--bronze); }
+  svg .node-silver { fill: var(--silver-bg); stroke: var(--silver); }
+  svg .node-gold   { fill: var(--gold-bg);   stroke: var(--gold); }
+  svg .node-store  { fill: var(--consumo-bg); stroke: var(--consumo); }
+
+  .diagram-caption {
+    margin-top: 0.9rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    max-width: 74ch;
+  }
+
+  /* ---- layer legend ---- */
+  .layers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .layer {
+    background: var(--surface);
+    padding: 1.3rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .layer .swatch {
+    width: 1.6rem;
+    height: 0.3rem;
+    border-radius: 2px;
+  }
+  .layer.raw .swatch { background: var(--raw); }
+  .layer.bronze .swatch { background: var(--bronze); }
+  .layer.silver .swatch { background: var(--silver); }
+  .layer.gold .swatch { background: var(--gold); }
+
+  .layer .name {
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+  .layer.raw .name { color: var(--raw); }
+  .layer.bronze .name { color: var(--bronze); }
+  .layer.silver .name { color: var(--silver); }
+  .layer.gold .name { color: var(--gold); }
+
+  .layer p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+
+  .layer .bucket {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 760px) {
+    .layers { grid-template-columns: 1fr 1fr; }
+    h1 { font-size: 2rem; }
+  }
+
+  /* ---- closing note ---- */
+  .note {
+    border-left: 3px solid var(--consumo);
+    padding: 0.2rem 0 0.2rem 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    max-width: 70ch;
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  a { color: var(--consumo); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--consumo); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;650&display=swap" rel="stylesheet">
+
+<main>
+
+  <header>
+    <span class="eyebrow">Panorama do Mercado Estético · Arquitetura de dados</span>
+    <h1>Do PDF ao Dashboard</h1>
+    <p class="thesis">
+      Três fontes brutas — <b>PDF do ISAPS</b>, <b>CSV do IBGE</b>, <b>CSV do DATASUS</b> — percorrem
+      quatro camadas de tratamento (<b>Raw → Bronze → Silver → Gold</b>), guardadas no MinIO a cada
+      passo, até convergirem em três tabelas de negócio publicadas no <b>Postgres</b> e lidas ao vivo
+      pelo relatório em <b>Streamlit</b>.
+    </p>
+  </header>
+
+  <section aria-labelledby="diagrama-heading">
+    <h2 id="diagrama-heading">O pipeline, de ponta a ponta</h2>
+    <div class="diagram-wrap">
+      <div class="diagram-scroll">
+        <svg viewBox="0 0 1500 610" role="img" aria-label="Diagrama do pipeline: três fontes (ISAPS, IBGE, DATASUS) fluem por Raw, Bronze e Silver em raias paralelas; na camada Gold, ISAPS e IBGE se cruzam na tabela de contexto, e IBGE e DATASUS se cruzam na tabela de procedimentos reparadores; as três tabelas Gold convergem no Postgres, que alimenta o Streamlit.">
+          <defs>
+            <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L8,4 L0,8 Z" fill="var(--ink-faint)"></path>
+            </marker>
+          </defs>
+
+          <!-- column headers -->
+          <text x="20" y="34" class="col-label" font-size="12" fill="var(--raw)">RAW</text>
+          <text x="20" y="50" class="mono" font-size="10">bucket raw</text>
+
+          <text x="250" y="34" class="col-label" font-size="12" fill="var(--bronze)">BRONZE</text>
+          <text x="250" y="50" class="mono" font-size="10">bucket bronze</text>
+
+          <text x="480" y="34" class="col-label" font-size="12" fill="var(--silver)">SILVER</text>
+          <text x="480" y="50" class="mono" font-size="10">bucket silver</text>
+
+          <text x="710" y="34" class="col-label" font-size="12" fill="var(--gold)">GOLD</text>
+          <text x="710" y="50" class="mono" font-size="10">bucket gold</text>
+
+          <text x="980" y="34" class="col-label" font-size="12" fill="var(--consumo)">POSTGRES</text>
+          <text x="980" y="50" class="mono" font-size="10">schema gold</text>
+
+          <text x="1220" y="34" class="col-label" font-size="12" fill="var(--consumo)">STREAMLIT</text>
+          <text x="1220" y="50" class="mono" font-size="10">app.py</text>
+
+          <!-- ===== straight in-lane edges: RAW->BRONZE->SILVER ===== -->
+          <line x1="200" y1="90"  x2="250" y2="90"  class="edge" marker-end="url(#arrow)"></line>
+          <line x1="430" y1="90"  x2="480" y2="90"  class="edge" marker-end="url(#arrow)"></line>
+          <line x1="200" y1="290" x2="250" y2="290" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="430" y1="290" x2="480" y2="290" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="200" y1="490" x2="250" y2="490" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="430" y1="490" x2="480" y2="490" class="edge" marker-end="url(#arrow)"></line>
+
+          <!-- ===== SILVER -> GOLD (the real mechanism: fan-in) ===== -->
+          <line x1="660" y1="90"  x2="710" y2="90"  class="edge" marker-end="url(#arrow)"></line>
+          <line x1="660" y1="110" x2="710" y2="270" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="660" y1="290" x2="710" y2="290" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="660" y1="300" x2="710" y2="470" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="660" y1="490" x2="710" y2="490" class="edge" marker-end="url(#arrow)"></line>
+
+          <!-- ===== GOLD -> POSTGRES (converge) ===== -->
+          <line x1="910" y1="90"  x2="980" y2="265" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="910" y1="290" x2="980" y2="290" class="edge" marker-end="url(#arrow)"></line>
+          <line x1="910" y1="490" x2="980" y2="315" class="edge" marker-end="url(#arrow)"></line>
+
+          <!-- ===== POSTGRES -> STREAMLIT ===== -->
+          <line x1="1150" y1="290" x2="1220" y2="290" class="edge" marker-end="url(#arrow)"></line>
+
+          <!-- ===== gap verbs ===== -->
+          <text x="225" y="580" class="verb" font-size="11" text-anchor="middle">extrai</text>
+          <text x="455" y="580" class="verb" font-size="11" text-anchor="middle">trata</text>
+          <text x="685" y="580" class="verb" font-size="11" text-anchor="middle">agrega / cruza</text>
+          <text x="945" y="580" class="verb" font-size="11" text-anchor="middle">publica</text>
+          <text x="1185" y="580" class="verb" font-size="11" text-anchor="middle">lê</text>
+
+          <!-- ================= RAW ================= -->
+          <rect x="20" y="62" width="180" height="56" class="node node-raw"></rect>
+          <text x="30" y="86" font-size="12.5" font-weight="600">PDF ISAPS</text>
+          <text x="30" y="102" class="mono" font-size="9.5">.../pdf/</text>
+
+          <rect x="20" y="262" width="180" height="56" class="node node-raw"></rect>
+          <text x="30" y="286" font-size="12.5" font-weight="600">CSV IBGE</text>
+          <text x="30" y="302" class="mono" font-size="9.5">.../csv/IBGE/</text>
+
+          <rect x="20" y="462" width="180" height="56" class="node node-raw"></rect>
+          <text x="30" y="486" font-size="12.5" font-weight="600">CSV DATASUS</text>
+          <text x="30" y="502" class="mono" font-size="9.5">.../csv/DATASUS/</text>
+
+          <!-- ================= BRONZE ================= -->
+          <rect x="250" y="62" width="180" height="56" class="node node-bronze"></rect>
+          <text x="260" y="86" font-size="12.5" font-weight="600">Bronze ISAPS</text>
+          <text x="260" y="102" class="mono" font-size="9.5">procedures_by_country/</text>
+
+          <rect x="250" y="262" width="180" height="56" class="node node-bronze"></rect>
+          <text x="260" y="286" font-size="12.5" font-weight="600">Bronze IBGE</text>
+          <text x="260" y="302" class="mono" font-size="9.5">dados_IBGE/</text>
+
+          <rect x="250" y="462" width="180" height="56" class="node node-bronze"></rect>
+          <text x="260" y="486" font-size="12.5" font-weight="600">Bronze DATASUS</text>
+          <text x="260" y="502" class="mono" font-size="9.5">dados_DATASUS/</text>
+
+          <!-- ================= SILVER ================= -->
+          <rect x="480" y="62" width="180" height="56" class="node node-silver"></rect>
+          <text x="490" y="86" font-size="12.5" font-weight="600">Silver ISAPS</text>
+          <text x="490" y="102" class="mono" font-size="9.5">procedures_by_country/</text>
+
+          <rect x="480" y="262" width="180" height="56" class="node node-silver"></rect>
+          <text x="490" y="286" font-size="12.5" font-weight="600">Silver IBGE</text>
+          <text x="490" y="302" class="mono" font-size="9.5">dados_IBGE/ + metadados</text>
+
+          <rect x="480" y="462" width="180" height="56" class="node node-silver"></rect>
+          <text x="490" y="486" font-size="12.5" font-weight="600">Silver DATASUS</text>
+          <text x="490" y="502" class="mono" font-size="9.5">dados_DATASUS/ + metadados</text>
+
+          <!-- ================= GOLD ================= -->
+          <rect x="710" y="62" width="200" height="56" class="node node-gold"></rect>
+          <text x="720" y="84" font-size="12" font-weight="600">Volume × Países</text>
+          <text x="720" y="100" class="mono" font-size="9.5">fonte: ISAPS</text>
+
+          <rect x="710" y="262" width="200" height="56" class="node node-gold"></rect>
+          <text x="720" y="280" font-size="12" font-weight="600">Contexto ×</text>
+          <text x="720" y="294" font-size="12" font-weight="600">Procedimentos</text>
+          <text x="720" y="309" class="mono" font-size="9.5">fontes: ISAPS + IBGE</text>
+
+          <rect x="710" y="462" width="200" height="56" class="node node-gold"></rect>
+          <text x="720" y="480" font-size="12" font-weight="600">Procedimentos</text>
+          <text x="720" y="494" font-size="12" font-weight="600">Reparadores SUS</text>
+          <text x="720" y="509" class="mono" font-size="9.5">fontes: DATASUS + IBGE</text>
+
+          <!-- ================= POSTGRES / STREAMLIT ================= -->
+          <rect x="980" y="255" width="170" height="70" class="node node-store"></rect>
+          <text x="990" y="284" font-size="13" font-weight="600">Postgres</text>
+          <text x="990" y="301" class="mono" font-size="9.5">schema gold · 6 tabelas</text>
+          <text x="990" y="313" class="mono" font-size="9.5">porta 5434</text>
+
+          <rect x="1220" y="255" width="170" height="70" class="node node-store"></rect>
+          <text x="1230" y="284" font-size="13" font-weight="600">Streamlit</text>
+          <text x="1230" y="301" class="mono" font-size="9.5">streamlit_app/app.py</text>
+          <text x="1230" y="313" class="mono" font-size="9.5">leitura ao vivo (sem cache)</text>
+        </svg>
+      </div>
+      <p class="diagram-caption">
+        As três fontes correm em raias paralelas até a Silver. Na Gold, as raias se cruzam: a tabela de
+        <b>contexto</b> nasce de ISAPS + IBGE, e a de <b>procedimentos reparadores</b> nasce de
+        DATASUS + IBGE — só o volume ISAPS × países fica isolado numa fonte só. As três tabelas Gold
+        convergem no mesmo schema do Postgres, de onde o Streamlit lê em tempo real — nunca do Parquet
+        local diretamente.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="camadas-heading">
+    <h2 id="camadas-heading">O que cada camada garante</h2>
+    <div class="layers">
+      <div class="layer raw">
+        <span class="swatch"></span>
+        <span class="name">Raw</span>
+        <p>Cópia fiel da fonte, sem nenhuma transformação — reprocessável do zero a qualquer momento.</p>
+        <span class="bucket">extracao_raw.ipynb</span>
+      </div>
+      <div class="layer bronze">
+        <span class="swatch"></span>
+        <span class="name">Bronze</span>
+        <p>Estrutura tabular (long/tidy) a partir do PDF ou CSV bruto — ainda sem limpeza de dado.</p>
+        <span class="bucket">extracao_bronze_*.ipynb</span>
+      </div>
+      <div class="layer silver">
+        <span class="swatch"></span>
+        <span class="name">Silver</span>
+        <p>Deduplicado, nulos avaliados, nomes normalizados/traduzidos, schema validado com <code>pandera</code>.</p>
+        <span class="bucket">tratamento_silver_*.ipynb</span>
+      </div>
+      <div class="layer gold">
+        <span class="swatch"></span>
+        <span class="name">Gold</span>
+        <p>Agregada, cruzada entre fontes quando fazia sentido, publicada em Parquet e no Postgres.</p>
+        <span class="bucket">gold_*.ipynb</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    <b>Por que o Streamlit lê do Postgres, e não dos notebooks:</b> as camadas existem para separar
+    responsabilidades — extrair, tratar e agregar acontecem offline, nos notebooks; o relatório só
+    consulta o resultado já publicado. Isso significa que rodar o app não reprocessa nada, e que o
+    Postgres é o único ponto de verdade que a camada de apresentação conhece.
+  </p>
+
+</main>

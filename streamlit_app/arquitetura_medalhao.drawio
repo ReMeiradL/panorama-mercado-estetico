@@ -1,0 +1,150 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.7.5" type="device">
+  <diagram name="Arquitetura Medalhão" id="arquitetura-medalhao">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ================= group frames ================= -->
+        <mxCell id="f_raw" value="RAW&#10;bucket raw" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fillColor=none;strokeColor=#5B6470;dashed=1;fontColor=#5B6470;fontStyle=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="8" y="60" width="204" height="514" as="geometry" />
+        </mxCell>
+        <mxCell id="f_bronze" value="BRONZE&#10;bucket bronze" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fillColor=none;strokeColor=#A85D2E;dashed=1;fontColor=#A85D2E;fontStyle=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="238" y="60" width="204" height="514" as="geometry" />
+        </mxCell>
+        <mxCell id="f_silver" value="SILVER&#10;bucket silver" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fillColor=none;strokeColor=#6E7F94;dashed=1;fontColor=#6E7F94;fontStyle=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="468" y="60" width="204" height="514" as="geometry" />
+        </mxCell>
+        <mxCell id="f_gold" value="GOLD&#10;bucket gold" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fillColor=none;strokeColor=#A8791F;dashed=1;fontColor=#A8791F;fontStyle=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="698" y="60" width="224" height="514" as="geometry" />
+        </mxCell>
+        <mxCell id="f_consumo" value="CONSUMO" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fillColor=none;strokeColor=#3D5C72;dashed=1;fontColor=#3D5C72;fontStyle=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="968" y="275" width="434" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ================= gap verb labels ================= -->
+        <mxCell id="v1" value="extrai" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=11;fontColor=#8993A0;" vertex="1" parent="1">
+          <mxGeometry x="175" y="596" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="v2" value="trata" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=11;fontColor=#8993A0;" vertex="1" parent="1">
+          <mxGeometry x="405" y="596" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="v3" value="agrega / cruza" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=11;fontColor=#8993A0;" vertex="1" parent="1">
+          <mxGeometry x="625" y="596" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="v4" value="publica" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=11;fontColor=#8993A0;" vertex="1" parent="1">
+          <mxGeometry x="895" y="596" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="v5" value="lê" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=11;fontColor=#8993A0;" vertex="1" parent="1">
+          <mxGeometry x="1135" y="596" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ================= RAW nodes ================= -->
+        <mxCell id="n_raw_isaps" value="&lt;b&gt;PDF ISAPS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;.../pdf/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F2F3F4;strokeColor=#5B6470;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="102" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_raw_ibge" value="&lt;b&gt;CSV IBGE&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;.../csv/IBGE/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F2F3F4;strokeColor=#5B6470;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="302" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_raw_datasus" value="&lt;b&gt;CSV DATASUS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;.../csv/DATASUS/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F2F3F4;strokeColor=#5B6470;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="502" width="180" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ================= BRONZE nodes ================= -->
+        <mxCell id="n_bronze_isaps" value="&lt;b&gt;Bronze ISAPS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;procedures_by_country/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBEEE6;strokeColor=#A85D2E;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="250" y="102" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_bronze_ibge" value="&lt;b&gt;Bronze IBGE&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;dados_IBGE/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBEEE6;strokeColor=#A85D2E;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="250" y="302" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_bronze_datasus" value="&lt;b&gt;Bronze DATASUS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;dados_DATASUS/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBEEE6;strokeColor=#A85D2E;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="250" y="502" width="180" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ================= SILVER nodes ================= -->
+        <mxCell id="n_silver_isaps" value="&lt;b&gt;Silver ISAPS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;procedures_by_country/&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF1F4;strokeColor=#6E7F94;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="480" y="102" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_silver_ibge" value="&lt;b&gt;Silver IBGE&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;dados_IBGE/ + metadados&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF1F4;strokeColor=#6E7F94;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="480" y="302" width="180" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_silver_datasus" value="&lt;b&gt;Silver DATASUS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;dados_DATASUS/ + metadados&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF1F4;strokeColor=#6E7F94;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="480" y="502" width="180" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ================= GOLD nodes ================= -->
+        <mxCell id="n_gold_volume" value="&lt;b&gt;Volume × Países&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;fonte: ISAPS&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBF3E2;strokeColor=#A8791F;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="710" y="102" width="200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_gold_contexto" value="&lt;b&gt;Contexto × Procedimentos&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;fontes: ISAPS + IBGE&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBF3E2;strokeColor=#A8791F;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="710" y="302" width="200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="n_gold_reparadores" value="&lt;b&gt;Procedimentos Reparadores SUS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;fontes: DATASUS + IBGE&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FBF3E2;strokeColor=#A8791F;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="710" y="502" width="200" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ================= CONSUMO nodes ================= -->
+        <mxCell id="n_postgres" value="&lt;b&gt;Postgres&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;schema gold · 6 tabelas&lt;br&gt;porta 5434&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF0F3;strokeColor=#3D5C72;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="980" y="295" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n_streamlit" value="&lt;b&gt;Streamlit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#6B7480&quot;&gt;streamlit_app/app.py&lt;br&gt;leitura ao vivo (sem cache)&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF0F3;strokeColor=#3D5C72;fontColor=#1C2126;fontFamily=Helvetica;fontSize=13;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="295" width="170" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ================= edges: RAW -> BRONZE -> SILVER (in-lane) ================= -->
+        <mxCell id="e_r1b1" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_raw_isaps" target="n_bronze_isaps">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_b1s1" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_bronze_isaps" target="n_silver_isaps">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_r2b2" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_raw_ibge" target="n_bronze_ibge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_b2s2" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_bronze_ibge" target="n_silver_ibge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_r3b3" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_raw_datasus" target="n_bronze_datasus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_b3s3" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_bronze_datasus" target="n_silver_datasus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ================= edges: SILVER -> GOLD (fan-in) ================= -->
+        <mxCell id="e_s1g1" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_silver_isaps" target="n_gold_volume">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_s1g2" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.85;exitDx=0;exitDy=0;entryX=0;entryY=0.15;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_silver_isaps" target="n_gold_contexto">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_s2g2" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_silver_ibge" target="n_gold_contexto">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_s2g3" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.85;exitDx=0;exitDy=0;entryX=0;entryY=0.15;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_silver_ibge" target="n_gold_reparadores">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_s3g3" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_silver_datasus" target="n_gold_reparadores">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ================= edges: GOLD -> POSTGRES (converge) ================= -->
+        <mxCell id="e_g1p" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_gold_volume" target="n_postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_g2p" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_gold_contexto" target="n_postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_g3p" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_gold_reparadores" target="n_postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ================= edge: POSTGRES -> STREAMLIT ================= -->
+        <mxCell id="e_pst" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#8993A0;strokeWidth=1.4;endArrow=block;endFill=1;endSize=6;" edge="1" parent="1" source="n_postgres" target="n_streamlit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
