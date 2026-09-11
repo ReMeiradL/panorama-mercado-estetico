@@ -10,7 +10,7 @@ O resultado final é um relatório interativo em Streamlit, lido diretamente do 
 
 ![Pipeline de engenharia de dados — fontes públicas, MinIO, notebooks Python (bronze/silver/gold), PostgreSQL e Streamlit](arquitetura/pipeline_etl_tecnologias.png)
 
-Veja também o [diagrama técnico interativo](arquitetura/arquitetura.html) (fluxo detalhado por fonte, camada e tabela).
+Veja também o [diagrama técnico interativo](https://htmlpreview.github.io/?https://github.com/ReMeiradL/panorama-mercado-estetico/blob/main/arquitetura/arquitetura.html) (fluxo detalhado por fonte, camada e tabela — abre renderizado no navegador).
 
 O projeto segue a arquitetura em camadas, cada uma num notebook separado por fonte de dado:
 
