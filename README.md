@@ -8,6 +8,8 @@ O resultado final é um relatório interativo em Streamlit, lido diretamente do 
 
 ## Arquitetura (medalhão)
 
+![Pipeline de engenharia de dados — fontes públicas, MinIO, notebooks Python (bronze/silver/gold), PostgreSQL e Streamlit](arquitetura/pipeline_etl_tecnologias.png)
+
 O projeto segue a arquitetura em camadas, cada uma num notebook separado por fonte de dado:
 
 ```
